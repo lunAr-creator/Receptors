@@ -86,5 +86,5 @@ while True:
     elif args.cmd == 'help':
         parser.print_help()
     else:
-        print('Goodbye!')
+        print('Goodbye :D!')
         break
