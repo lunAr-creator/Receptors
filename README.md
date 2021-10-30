@@ -65,4 +65,4 @@ Distributed under the MIT License. See [LICENSE](https://github.com/lunAr-creato
 
 ## Authors
 
-* **lunAr-creator** - ** - [lunAr-creator](https://github.com/lunAr-creator/) - **
+* [lunAr-creator](https://github.com/lunAr-creator/) 
