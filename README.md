@@ -7,7 +7,7 @@
   <h3 align="center">Receptors</h3>
 
   <p align="center">
-    A command line URL checker utilising Requests and Argparse, aiming to deliver a user friendly approach to something otherwise tedious.
+    A command line URL checker utilising Requests and Argparse, aiming to deliver a user friendly approach to a somewhat otherwise tedious task.
     <br/>
     <br/>
   </p>
