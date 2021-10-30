@@ -32,7 +32,7 @@ Receptors is a command line program for making the process of checking the statu
 
 Here's why:
 
-* Your time should be valued, and checking URL's manually is not something that will benefit you. 
+* Your time should be valued, and checking URL's manually is not something that you want to spend time doing.
 * Receptors aims to correct this by providing a simple and easy to use command line program which will do it for you, requiring little to no input and writing results to a file!
 
 ## Built With
