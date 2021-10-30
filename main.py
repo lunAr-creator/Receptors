@@ -45,22 +45,21 @@ def response_time(url, timeout, span, interval, threshold):
 
             console = Console()
 
-            codes= {
-
+            codes = {
+              "pass_": "[PASS]",
+              "pass_o": "[OVERALL PASS]",
+              "fail_": "[FAIL]",
+              "fail_o": "[OVERALL FAIL]"
             }
-            pass_ = "[PASS]"
-            pass_o = "[OVERALL PASS]"
-            fail_ = "[FAIL]"
-            fail_o = "[OVERALL FAIL]"
 
             if response_time >= threshold:
                 line1 = f"~ Response time: [red]{response_time}[/red]ms"
-                line2 = fail_.rjust(118-(len(line1[3:])))
+                line2 = codes['fail_'].rjust(118-(len(line1[3:])))
                 rprint(f"{line1} {line2}")
 
             else:
                 line1 = f"~ Response time: [green]{response_time}[/green]ms"
-                line2 = pass_.rjust(122-(len(line1[3:])))
+                line2 = codes['pass_'].rjust(122-(len(line1[3:])))
                 rprint(f"{line1} {line2}")
 
             if span == 0:
@@ -69,13 +68,13 @@ def response_time(url, timeout, span, interval, threshold):
 
                 if av_resp_time > threshold:
                     line1 = f"Average response time: [red]{av_resp_time}[/red]ms"
-                    line2 = line2 = fail_o.rjust(118-(len(line1[3:])))
+                    line2 = line2 = codes['fail_o'].rjust(118-(len(line1[3:])))
                     rprint(f"{line1} {line2}")
                     break
 
                 else:
                     line1 = f"Average response time: [green]{av_resp_time}[/green]ms"
-                    line2 = line2 = pass_o.rjust(122-(len(line1[3:])))
+                    line2 = line2 = codes['pass_o'].rjust(122-(len(line1[3:])))
                     rprint(f"{line1} {line2}")
                     break
 
@@ -91,26 +90,43 @@ def response_time(url, timeout, span, interval, threshold):
     except requests.exceptions.RequestException as err04:
         print ("Error: ", err04)
 
-parser = argparse.ArgumentParser(prog='PROG', description='description')
+def check(url):
+    response = requests.post(url, timeout=6)
+    print(response.status_code)
+
+
+parser = argparse.ArgumentParser(prog="RECEPTORS", description='description')
 parser.add_argument('cmd', choices=['scan','check','help','quit'])
-parser.add_argument('--url', type=str, required=True, help="URL to target")
-parser.add_argument('--timeout', type=int, required=True, help="Timeout: measured in s")
-parser.add_argument('--span', type=int, required=True, help="Number of times to get response time")
-parser.add_argument('--interval', type=int, required=True, help="Time between each span")
-parser.add_argument('--threshold', type=int, required=True, help="threshold for repsonse time")
+parser.add_argument('-u', '--url', type=str, required=True, help="URL to target")
+parser.add_argument('-t', '--timeout', type=int, required=False, default=6, help="Timeout: measured in s")
+parser.add_argument('-s', '--span', type=int, required=False, default=10, help="Number of times to get response time")
+parser.add_argument('-i', '--interval', type=int, required=False, default=1, help="Time between each span")
+parser.add_argument('-th', '--threshold', type=int, required=False, default=1000, help="Threshold for repsonse time")
+
+print(r"""
+ _____                     _
+|  __ \                   | |
+| |__) |___  ___ ___ _ __ | |_ ___  _ __ ___
+|  _  // _ \/ __/ _ \ '_ \| __/ _ \| '__/ __|
+| | \ \  __/ (_|  __/ |_) | || (_) | |  \__ \
+|_|  \_\___|\___\___| .__/ \__\___/|_|  |___/
+                    | |
+                    |_|  v1.03
+""")
 
 while True:
-    astr = input('$: ')
+    astr = input('\nreceptors ~v1.03 \n→ ')
     # print astr
     try:
         args = parser.parse_args(astr.split())
     except SystemExit:
-        # trap argparse error message
-        print('error')
         continue
     if args.cmd in ['scan']:
-        print(f'Executing {args.cmd} for URL: {args.url}')
+        print(f'\n> Executing {args.cmd} for URL: {args.url}')
         response_time(args.url, args.timeout, args.span, args.interval, args.threshold)
+    elif args.cmd in ['check']:
+        print(f'Executing {args.cmd} for URL: {args.url}')
+        check(args.url)
     elif args.cmd == 'help':
         parser.print_help()
     else:
