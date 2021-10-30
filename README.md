@@ -26,7 +26,7 @@
 
 ## About The Project
 
-![Screen Shot](images/screenshot.png)
+![Screen Shot](screenshot.png)
 
 Receptors is a command line program for making the process of checking the status, response time and other various info about a URL, easier.
 
