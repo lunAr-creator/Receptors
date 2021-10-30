@@ -91,8 +91,16 @@ def response_time(url, timeout, span, interval, threshold):
         print ("Error: ", err04)
 
 def check(url):
-    response = requests.post(url, timeout=6)
-    print(response.status_code)
+    try:
+
+        if 'https://' or 'http://' not in url:
+            url = 'https://' + url
+
+        response = requests.post(url, timeout=6)
+        print(f'Response code: {response.status_code}')
+    except:
+        print("We encountered an error tying to process your request. Please try again later")
+
 
 
 parser = argparse.ArgumentParser(prog="RECEPTORS", description='description')
