@@ -44,6 +44,10 @@ def response_time(url, timeout, span, interval, threshold):
             times.append(response_time)
 
             console = Console()
+
+            codes= {
+
+            }
             pass_ = "[PASS]"
             pass_o = "[OVERALL PASS]"
             fail_ = "[FAIL]"
