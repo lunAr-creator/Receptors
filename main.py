@@ -27,6 +27,7 @@ import datetime
 import requests
 import argparse
 import time
+import socket as s
 
 from rich.console import Console
 from rich import print as rprint
@@ -52,6 +53,11 @@ def response_time(url, timeout, span, interval, threshold):
               "fail_o": "[OVERALL FAIL]"
             }
 
+            try:
+                ip = 's.gethostbyname(url)'
+            except Exception as e:
+                print('Failed to resolve IP: ', e)
+
             if response_time >= threshold:
                 line1 = f"~ Response time: [red]{response_time}[/red]ms"
                 line2 = codes['fail_'].rjust(118-(len(line1[3:])))
@@ -67,14 +73,14 @@ def response_time(url, timeout, span, interval, threshold):
                 av_resp_time = round((sum(times) / len(times)), 3)
 
                 if av_resp_time > threshold:
-                    line1 = f"Average response time: [red]{av_resp_time}[/red]ms"
-                    line2 = line2 = codes['fail_o'].rjust(118-(len(line1[3:])))
+                    line1 = f"Average response time: [red]{av_resp_time}[/red]ms   Min: {min(times)}ms Max: {max(times)}ms"
+                    line2 = line2 = codes['fail_o'].rjust(140-(len(line1[3:])))
                     rprint(f"{line1} {line2}")
                     break
 
                 else:
-                    line1 = f"Average response time: [green]{av_resp_time}[/green]ms"
-                    line2 = line2 = codes['pass_o'].rjust(122-(len(line1[3:])))
+                    line1 = f"Average response time: [green]{av_resp_time}[/green]ms   Min: {min(times)}ms Max: {max(times)}ms"
+                    line2 = line2 = codes['pass_o'].rjust(152-(len(line1[3:])))
                     rprint(f"{line1} {line2}")
                     break
 
